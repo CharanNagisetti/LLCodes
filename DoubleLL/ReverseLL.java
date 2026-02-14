@@ -1,0 +1,62 @@
+import java.util.*;
+class Node{
+    int val;
+    Node next;
+    Node prev;
+    public Node(int val){
+        this.val=val;
+        this.next=null;
+        this.prev=null;
+    }
+}
+public class ReverseLL {
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Enter n: ");
+        int n=sc.nextInt();
+        List<Integer> l=new ArrayList<>();
+        for(int i=0;i<n;i++){
+            l.add(sc.nextInt());
+        }
+        Node head=createLL(l);
+        System.out.print("The linked list has been created: ");
+        printLL(head);
+        Node reverseHead=reverse(head);
+        System.out.print("The reverse version LL: ");
+        printLL(reverseHead);
+        sc.close();
+    }
+    public static Node reverse(Node head){
+        Node temp=head;
+        Node newHead=null;
+        while(temp!=null){
+            Node nextTemp=temp.next;
+            temp.next=temp.prev;
+            temp.prev=nextTemp;
+            newHead=temp;
+            temp=nextTemp;
+        }
+        return newHead;
+    }
+    public static Node createLL(List<Integer> l){
+        int n=l.size();
+        if(n==0) return null;
+        Node head=new Node(l.get(0));
+        Node curr=head;
+        for(int i=1;i<n;i++){
+            Node nextNode=new Node(l.get(i));
+            curr.next=nextNode;
+            nextNode.prev=curr;
+            curr=nextNode;
+        }
+        return head;
+    }
+    public static void printLL(Node head){
+        Node temp=head;
+        while(temp!=null){
+            if(temp.next==null) System.out.println(temp.val);
+            else System.out.print(temp.val+"->");
+            temp=temp.next;
+        }
+    }
+}
